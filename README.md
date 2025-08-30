@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SWAPI Encyclopedia (Next.js + Apollo SSR)
 
-## Getting Started
+Mobile-first Star Wars character encyclopedia built with **Next.js (App Router)**, **TypeScript**, **Apollo Client (SSR)**, and **Tailwind CSS**.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js 15 (App Router), TypeScript
+- Apollo Client + `@apollo/client-integration-nextjs` (RSC prefetch + SSR hydration)
+- GraphQL (SWAPI)
+- Tailwind CSS
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **People List:** Search, Sorting (ascending/descending), pagination;
+- **Characters Page:** Detailed information for each character (species, homeworld, films)
+- **Route Boundaries:** Custom 'loading.tsx' and 'error.tsx' for better UX
+- **SSR & RSC Integration:** Appolo Client with prefetching and caching
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Why `/graphql` endpoint?
 
-## Learn More
+The Netlify function redirects `/.netlify/functions/index` to `/graphql`. Redirects may turn POST into GET, losing the body. I use direct `/graphql` with explicit POST to avoid `Missing query` errors.
 
-To learn more about Next.js, take a look at the following resources:
+## How to run
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**1.Install dependencies:**
+`bash
+    pnpm install
+    pnpm dev
+    # open http://localhost:3000
+    `
+**2.Run the app**
+`bash
+    pnpm dev
+    # open http://localhost:3000
+    `
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+# Changes **Version** 1 :
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Architecture
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Server prefetch (RSC):** src/lib/apollo/rsc.ts → getClient().query(...) in server pages (e.g., app/page.tsx)
+- **Client hydration:** src/lib/apollo/ssr.tsx wraps the app with ApolloNextAppProvider so client components can use Apollo hooks
+- **UI** src/components/ui/{Button,Input,Card}.tsx
+- **GraphQL** src/graphql/{fragments,queries}.ts
+
+## Implemented
+
+- **People list (mobile-first):** search, sorting (asc/desc), fetchMore pagination
+- **Route boundaries (loading/error)** for the root route
+- **Apollo SSR integration** (RSC prefetch + client hydration)
+
+## Next steps
+
+- Character page /character/[id] with details (species, homeworld, films)
+- Apollo typePolicies for cursor pagination
+- GraphQL Codegen for strict TS types
+- Basic tests (Vitest + RTL)
+- Visual Changes via Tailwind
