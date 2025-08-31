@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
-import { PERSON_CORE, PERSON_RICH } from "./fragments";
+import { PERSON_LIST, PERSON_CORE, PERSON_RICH } from "./fragments";
 
 export const ALL_PEOPLE = gql`
-  ${PERSON_CORE}
+  ${PERSON_LIST}
   query AllPeople($first: Int!, $after: String) {
     allPeople(first: $first, after: $after) {
       pageInfo {
@@ -10,7 +10,7 @@ export const ALL_PEOPLE = gql`
         endCursor
       }
       people {
-        ...PersonCore
+        ...PersonList
       }
     }
   }
