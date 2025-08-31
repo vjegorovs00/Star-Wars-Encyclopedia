@@ -1,6 +1,3 @@
-//Here located graphql requests
-//Person core and details
-
 import { gql } from "@apollo/client";
 
 export const PERSON_CORE = gql`
@@ -8,6 +5,36 @@ export const PERSON_CORE = gql`
     id
     name
     birthYear
+  }
+`;
+
+export const PERSON_LIST = gql`
+  fragment PersonList on Person {
+    id
+    name
+    birthYear
+    gender
+    species {
+      name
+    }
+    homeworld {
+      name
+    }
+    filmConnection {
+      films {
+        title
+      }
+    }
+    starshipConnection {
+      starships {
+        name
+      }
+    }
+    vehicleConnection {
+      vehicles {
+        name
+      }
+    }
   }
 `;
 
@@ -21,7 +48,6 @@ export const PERSON_RICH = gql`
     eyeColor
     hairColor
     skinColor
-
     species {
       name
     }
@@ -29,23 +55,20 @@ export const PERSON_RICH = gql`
       name
       population
     }
-
-    filmCollection {
+    filmConnection {
       films {
         title
         episodeID
         releaseDate
       }
     }
-
     starshipConnection {
-      starship {
+      starships {
         name
       }
     }
-
     vehicleConnection {
-      vehicle {
+      vehicles {
         name
       }
     }
