@@ -58,3 +58,40 @@ The Netlify function redirects `/.netlify/functions/index` to `/graphql`. Redire
 - GraphQL Codegen for strict TS types
 - Basic tests (Vitest + RTL)
 - Visual Changes via Tailwind
+
+# Changes **Version** 2 :
+
+## GraphQL
+
+- **Fragments** (`fragments.ts`):
+  - Added `PERSON_LIST` with essential fields for list view (id, name, birthYear, gender, species, homeworld, films, starships, vehicles).
+  - Kept `PERSON_CORE` and `PERSON_RICH` for details page.
+
+- **Queries** (`queries.ts`):
+  - `AllPeople` query now spreads `...PersonList`, so client receives all necessary fields for filtering and sorting.
+  - `Person` query composes `PersonCore` and `PersonRich` for detailed info.
+
+## Utils
+
+- **people.ts**:
+  - Introduced `PersonLite` type.
+  - Added helpers: `initialKey`, `sortPeopleByName`, `groupPeopleByInitial`, `sortInitials`.
+
+## Components
+
+- **PeopleList.tsx**:
+  - Automatic **full pagination** on initial render (no need to click "Load more" to search Yoda etc.).
+  - Sorting:
+    - By **Name** (asc/desc).
+    - By **Birth year** (asc/desc, using `BBY/ABY` conversion).
+  - Grouped rendering by **alphabet initials** (sections A–Z, `#` for non-letter).
+  - Deduplication of characters by `id` to prevent duplicates during pagination.
+  - Guards against infinite loops when `cursor` does not advance.
+
+---
+
+💡 With these changes the app:
+
+- Fetches **all Star Wars characters** automatically.
+- Lets user **search and sort** without extra clicks.
+- Shows results grouped **A–Z**, clean and without duplicates.
