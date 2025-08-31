@@ -5,7 +5,7 @@ import {
   InMemoryCache,
 } from "@apollo/client-integration-nextjs";
 
-const GRAPHQL_URI = "https://swapi-graphql.netlify.app/graphql";
+const GRAPHQL_URI = "https://swapi-graphql.azure-api.net/graphql";
 
 export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({

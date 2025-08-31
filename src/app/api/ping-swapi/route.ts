@@ -4,11 +4,30 @@
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const res = await fetch("https://swapi-graphql.netlify.app/graphql", {
+  const res = await fetch("https://swapi-graphql.azure-api.net/graphql", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      query: "{ allPeople(first:1) { people { name } } }",
+      query: `
+        query PingLuke {
+       
+            person(id: "cGVvcGxlOjE=") {
+              name
+              birthYear
+              gender
+              eyeColor
+              hairColor
+              skinColor
+              species { name }
+              homeworld { name population}
+              filmConnection { films { title episodeID releaseDate} }
+              starshipConnection { starships { name } }
+              vehicleConnection { vehicles { name } }
+            }
+  
+        }
+      `,
+      variables: { first: 1 },
     }),
   });
 

@@ -8,7 +8,7 @@ import {
 } from "@apollo/client-integration-nextjs";
 import type { ReactNode } from "react";
 
-const GRAPHQL_URI = "https://swapi-graphql.netlify.app/graphql";
+const GRAPHQL_URI = "https://swapi-graphql.azure-api.net/graphql";
 
 function makeClient() {
   return new ApolloClient({

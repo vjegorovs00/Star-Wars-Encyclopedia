@@ -11,8 +11,17 @@ export const PERSON_CORE = gql`
   }
 `;
 
-export const PERSON_DETAILS = gql`
-  fragment PersonDetails on Person {
+export const PERSON_RICH = gql`
+  fragment PersonRich on Person {
+    name
+    birthYear
+    gender
+    height
+    mass
+    eyeColor
+    hairColor
+    skinColor
+
     species {
       name
     }
@@ -20,11 +29,24 @@ export const PERSON_DETAILS = gql`
       name
       population
     }
-    filmConnection {
+
+    filmCollection {
       films {
         title
         episodeID
         releaseDate
+      }
+    }
+
+    starshipConnection {
+      starship {
+        name
+      }
+    }
+
+    vehicleConnection {
+      vehicle {
+        name
       }
     }
   }
