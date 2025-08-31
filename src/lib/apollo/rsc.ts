@@ -12,19 +12,15 @@ export const { getClient } = registerApolloClient(() => {
     cache: new InMemoryCache(),
     link: new HttpLink({
       uri: GRAPHQL_URI,
-      fetch: (uri, options) => {
-        const baseHeaders: HeadersInit = { "content-type": "application/json" };
-        const extra: HeadersInit =
-          options?.headers instanceof Headers
-            ? Object.fromEntries(options.headers.entries())
-            : ((options?.headers as HeadersInit) ?? {});
-
-        return fetch(GRAPHQL_URI, {
+      fetch: (_uri, options) =>
+        fetch(GRAPHQL_URI, {
           ...(options as RequestInit),
           method: "POST",
-          headers: { ...baseHeaders, ...extra },
-        });
-      },
+          headers: {
+            "content-type": "application/json",
+            ...(options?.headers as HeadersInit),
+          },
+        }),
     }),
   });
 });

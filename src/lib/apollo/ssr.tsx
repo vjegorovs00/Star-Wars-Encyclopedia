@@ -1,6 +1,6 @@
 "use client";
 
-import { HttpLink } from "@apollo/client";
+import { HttpLink, ApolloLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   ApolloClient,
@@ -8,15 +8,26 @@ import {
 } from "@apollo/client-integration-nextjs";
 import type { ReactNode } from "react";
 
-const GRAPHQL_URI = "https://swapi-graphql.azure-api.net/graphql";
+function getBaseUrl() {
+  if (typeof window !== "undefined") {
+    return "";
+  }
+
+  return process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : `http://localhost:3000`;
+}
 
 function makeClient() {
+  const base = getBaseUrl();
+
+  const httpLink = new HttpLink({
+    uri: `${base}/api/graphql`,
+  });
+
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: new HttpLink({
-      uri: GRAPHQL_URI,
-      headers: { "content-type": "application/json" },
-    }),
+    link: ApolloLink.from([httpLink]),
   });
 }
 
