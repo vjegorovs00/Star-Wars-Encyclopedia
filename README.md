@@ -22,17 +22,25 @@ The Netlify function redirects `/.netlify/functions/index` to `/graphql`. Redire
 
 ## How to run
 
-**1.Install dependencies:**
-`bash
-    pnpm install
-    pnpm dev
-    # open http://localhost:3000
-    `
-**2.Run the app**
-`bash
-    pnpm dev
-    # open http://localhost:3000
-    `
+```bash
+# 1. Clone the repo
+git clone https://github.com/vjegorovs00/Star-Wars-Encyclopedia.git
+cd Star-Wars-Encyclopedia
+
+# 2. Install dependencies
+pnpm install
+
+# if you don’t have pnpm:
+npm install -g pnpm
+
+# 3. Run the app
+pnpm dev
+# or
+npm run dev
+
+# 4. Open in browser
+http://localhost:3000
+```
 
 ---
 
