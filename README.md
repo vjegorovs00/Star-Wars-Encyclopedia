@@ -95,3 +95,20 @@ The Netlify function redirects `/.netlify/functions/index` to `/graphql`. Redire
 - Fetches **all Star Wars characters** automatically.
 - Lets user **search and sort** without extra clicks.
 - Shows results grouped **A–Z**, clean and without duplicates.
+
+---
+
+# Changes **Version** 3 :
+
+## Character Details (SSR + Mobile-First)
+
+- **Server prefetch**: `/character/[id]` prefetches data on the server via RSC `getClient().query(PERSON)` → the client gets Apollo's warm cache.
+- **UI (mobile-first)**: a neat card with basic facts (name, birth year, species, homeworld, gender/height/mass if available).
+- **Films**: a list of movies is displayed (sorted by `episodeID` → by `title`).
+- **Loading/Error**: separate `loading.tsx` (skeletons) and `error.tsx` for smooth UX.
+
+## Tech Notes
+
+- **Apollo + Next.js**: the client part uses `/api/graphql` proxy (CORS is eliminated), RSC goes directly to GraphQL.
+- **People list**: the initial page loads all character pages once; search and sorting (Name, Birth year) work without "Load more".
+- **Duplicates**: when merging pages, deduplication by `id` and protection against duplicate cursors are used.
